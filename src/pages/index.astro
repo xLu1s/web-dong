@@ -1,0 +1,216 @@
+---
+import { Picture } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import MenuBoard from '../components/MenuBoard.astro';
+import atun from '../assets/photos/casa-1.jpg';
+import salmon from '../assets/photos/casa-2.jpg';
+import mantequilla from '../assets/photos/casa-3.jpg';
+import langostino from '../assets/photos/casa-4.jpg';
+import anguila from '../assets/photos/casa-5.jpg';
+import dimsum from '../assets/photos/dimsum.jpg';
+import sashimi from '../assets/photos/sashimi.jpg';
+import noodles from '../assets/photos/noodles.jpg';
+import { orderUrl, phone, phoneDisplay, sections, setMenus } from '../data/menu';
+
+const title = 'Dōng Asian & Sushi Bar en Alcoy | Carta y domicilio';
+const description =
+  'Carta de Dōng Asian & Sushi Bar en el Centro Comercial Alzamora, Alcoy. Sushi, dim sum, wok y arroces. A domicilio: 966 333 230. Pedido mínimo 9 €.';
+
+const menuSchema = {
+  '@type': 'Menu',
+  name: 'Carta Dōng Asian & Sushi Bar',
+  hasMenuSection: [
+    ...sections.map((section) => ({
+      '@type': 'MenuSection',
+      name: section.title,
+      hasMenuItem: section.dishes.map((dish) => ({
+        '@type': 'MenuItem',
+        name: `${dish.code}. ${dish.name}`,
+        description: dish.description,
+        offers: {
+          '@type': 'Offer',
+          price: dish.price.replace(',', '.'),
+          priceCurrency: 'EUR',
+        },
+      })),
+    })),
+    {
+      '@type': 'MenuSection',
+      name: 'Menús para 2 personas',
+      hasMenuItem: setMenus.map((menu) => ({
+        '@type': 'MenuItem',
+        name: `Menú ${menu.letter} para 2 personas`,
+        description: menu.items.join('. '),
+        offers: {
+          '@type': 'Offer',
+          price: menu.price.replace(',', '.'),
+          priceCurrency: 'EUR',
+        },
+      })),
+    },
+  ],
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: 'Dōng Asian & Sushi Bar',
+  image: 'https://xlu1s.github.io/web-dong/og.jpg',
+  servesCuisine: ['Asiática', 'Sushi', 'Japonesa', 'China', 'Tailandesa', 'Vietnamita'],
+  telephone: phone,
+  url: 'https://xlu1s.github.io/web-dong/',
+  sameAs: [orderUrl],
+  menu: 'https://xlu1s.github.io/web-dong/#carta',
+  hasMenu: menuSchema,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Centro Comercial Alzamora, C/ Els Alçamora, 44, 2.ª planta',
+    addressLocality: 'Alcoy',
+    addressRegion: 'Alicante',
+    postalCode: '03802',
+    addressCountry: 'ES',
+  },
+  priceRange: '€€',
+};
+
+const plates = [
+  { src: atun, alt: 'Nigiri de atún' },
+  { src: salmon, alt: 'Nigiri de salmón' },
+  { src: mantequilla, alt: 'Nigiri de pez mantequilla' },
+  { src: langostino, alt: 'Nigiri de langostino' },
+  { src: anguila, alt: 'Nigiri de anguila' },
+];
+---
+
+<Layout title={title} description={description} jsonLd={jsonLd}>
+  <Hero />
+  <main id="contenido">
+
+  <section class="intro" aria-labelledby="casa">
+    <div class="wrap intro-grid">
+      <div>
+        <p class="kicker">Asian &amp; Sushi Bar</p>
+        <h2 id="casa">Cocina asiática en Alcoy</h2>
+      </div>
+      <div>
+        <p class="lede">
+          Nigiri, maki, dim sum, wok, arroces y tallarines. La carta impresa lo dice claro:
+          si desea algún plato que no esté, lo pueden hacer.
+        </p>
+        <ul class="facts">
+          <li>
+            <strong>A domicilio</strong>
+            Gratis, con pedido mínimo de 9 €. De 12:00 a 16:30 y de 19:30 a 00:00.
+          </li>
+          <li>
+            <strong>Teléfono</strong>
+            <a href={`tel:${phone}`}>{phoneDisplay}</a>
+          </li>
+          <li>
+            <strong>Pedido online</strong>
+            <a href={orderUrl} rel="noopener noreferrer">www.dongasiansushi.com</a>
+          </li>
+          <li>
+            <strong>Horario de sala</strong>
+            [por confirmar]. En dongasiansushi.com publican 12:00–16:00 y 19:30–24:00.
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="mosaic">
+        {plates.map((plate) => (
+          <figure class="frame">
+            <Picture
+              src={plate.src}
+              formats={['avif', 'webp']}
+              widths={[200, 400]}
+              sizes="(max-width: 760px) 46vw, 18vw"
+              alt={plate.alt}
+              loading="lazy"
+            />
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap editorial">
+    <figure class="frame">
+      <Picture
+        src={sashimi}
+        formats={['avif', 'webp']}
+        widths={[640, 960, 1400]}
+        sizes="(max-width: 760px) 100vw, 58vw"
+        alt="Tabla de uramaki y maki de salmón"
+        loading="lazy"
+      />
+    </figure>
+    <figure class="frame">
+      <Picture
+        src={dimsum}
+        formats={['avif', 'webp']}
+        widths={[480, 800, 1200]}
+        sizes="(max-width: 760px) 100vw, 38vw"
+        alt="Empanadillas al vapor con sésamo"
+        loading="lazy"
+      />
+    </figure>
+  </div>
+
+  <MenuBoard />
+
+  <div class="wrap editorial">
+    <figure class="frame">
+      <Picture
+        src={noodles}
+        formats={['avif', 'webp']}
+        widths={[640, 1100, 1600]}
+        sizes="100vw"
+        alt="Bol de tallarines con gambas y huevo"
+        loading="lazy"
+      />
+    </figure>
+  </div>
+
+  <section class="visit" id="contacto" aria-labelledby="visita">
+    <div class="wrap visit-grid">
+      <div>
+        <p class="kicker">Alcoy</p>
+        <h2 id="visita">Pase o pida a casa</h2>
+        <p class="muted">Asian &amp; Sushi Bar · Centro Comercial Alzamora</p>
+      </div>
+      <div>
+        <p>
+          C/ Els Alçamora, 44, 2.ª planta<br />
+          03802 Alcoy, Alicante
+        </p>
+        <p>
+          <a href={`tel:${phone}`}>{phoneDisplay}</a><br />
+          <a href={orderUrl} rel="noopener noreferrer">www.dongasiansushi.com</a>
+        </p>
+        <p class="muted">
+          Servicio a domicilio gratis. Pedido mínimo 9 €. De 12:00 a 16:30 y de 19:30 a 00:00.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-cream" href="#carta">Ver carta</a>
+          <a class="btn btn-ghost" href={`tel:${phone}`}>Llamar / Pedir a domicilio</a>
+        </div>
+        <p>
+          <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Centro Comercial Alzamora, Calle Els Alçamora 44, Alcoy')}`}>
+            Cómo llegar
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Dōng Asian &amp; Sushi Bar · Alcoy</p>
+      <p>IVA incluido en todos los precios. Horario de sala [por confirmar].</p>
+    </div>
+  </footer>
+</Layout>

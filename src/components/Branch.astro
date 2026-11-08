@@ -1,0 +1,23 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: className = 'branch' } = Astro.props;
+---
+
+<svg class={className} viewBox="0 0 220 900" aria-hidden="true" preserveAspectRatio="xMaxYMin meet">
+  <g class="ghost" fill="none">
+    <path d="M150 880 C150 760 190 700 130 610 C70 520 170 470 120 370 C80 290 160 240 110 150 C90 100 130 60 100 20"></path>
+    <path d="M130 610 C170 590 190 540 210 500"></path>
+    <path d="M120 370 C70 350 40 310 28 270"></path>
+    <path d="M110 150 C150 140 175 100 188 70"></path>
+  </g>
+  <path class="draw" pathLength="1" d="M150 880 C150 760 190 700 130 610 C70 520 170 470 120 370 C80 290 160 240 110 150 C90 100 130 60 100 20"></path>
+  <path class="draw twig" pathLength="1" d="M130 610 C170 590 190 540 210 500"></path>
+  <path class="draw twig" pathLength="1" d="M120 370 C70 350 40 310 28 270"></path>
+  <path class="draw twig" pathLength="1" d="M110 150 C150 140 175 100 188 70"></path>
+  <ellipse class="petal" cx="210" cy="496" rx="7" ry="4" transform="rotate(-30 210 496)"></ellipse>
+  <ellipse class="petal" cx="24" cy="266" rx="6" ry="3.5" transform="rotate(20 24 266)"></ellipse>
+  <ellipse class="petal" cx="190" cy="66" rx="6.5" ry="3.6" transform="rotate(-18 190 66)"></ellipse>
+  <ellipse class="petal" cx="98" cy="18" rx="5" ry="3" transform="rotate(12 98 18)"></ellipse>
+</svg>
