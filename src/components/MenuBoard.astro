@@ -40,8 +40,8 @@ function searchText(dish: Dish) {
   <div class="wrap">
     <h2 id="frase" class="sr-only">Platos a medida</h2>
     <p>
-      {phrase.map(([word, hot]) => (
-        <span class={hot ? 'hot' : undefined}>{word} </span>
+      {phrase.map(([word, hot], index) => (
+        <span class={hot ? 'hot' : undefined} style={`--i:${index}`}>{word} </span>
       ))}
     </p>
   </div>
@@ -92,12 +92,14 @@ function searchText(dish: Dish) {
   </ul>
 
   {sections.map((section) => (
-    <section class="section" id={section.id} data-section>
-      <p class="kicker">{section.kicker}</p>
-      <h3 class="section-title h-serif">
-        {section.title}
-        <span class="brush" aria-hidden="true"></span>
-      </h3>
+    <details class="section fold" id={section.id} data-section>
+      <summary>
+        <span class="kicker">{section.kicker}</span>
+        <span class="section-title h-serif">
+          {section.title}
+          <span class="brush" aria-hidden="true"></span>
+        </span>
+      </summary>
       {section.note && <p class="section-note">{section.note}</p>}
       <div class="dishes">
         {section.dishes.map((dish) => (
@@ -132,15 +134,17 @@ function searchText(dish: Dish) {
           </article>
         ))}
       </div>
-    </section>
+    </details>
   ))}
 
-  <section class="section" id="menus" data-section>
-    <p class="kicker">Para compartir</p>
-    <h3 class="section-title h-serif">
-      Menús para 2
-      <span class="brush" aria-hidden="true"></span>
-    </h3>
+  <details class="section fold" id="menus" data-section>
+    <summary>
+      <span class="kicker">Para compartir</span>
+      <span class="section-title h-serif">
+        Menús para 2
+        <span class="brush" aria-hidden="true"></span>
+      </span>
+    </summary>
     <div class="sets">
       {setMenus.map((menu) => (
         <article class={`set`} id={menu.id} data-dish={`menu ${menu.letter} ${menu.title} ${menu.items.join(' ')}`.toLowerCase()}>
@@ -164,7 +168,7 @@ function searchText(dish: Dish) {
       ))}
     </div>
     <p class="notice">IVA incluido en todos los precios.</p>
-  </section>
+  </details>
   <p id="sin-resultados" class="empty" hidden>Ningún plato coincide con la búsqueda.</p>
 </div>
 
@@ -175,6 +179,13 @@ function searchText(dish: Dish) {
     if (!input) return;
     var dishes = Array.prototype.slice.call(document.querySelectorAll('[data-dish]'));
     var sections = Array.prototype.slice.call(document.querySelectorAll('[data-section]'));
+    document.querySelectorAll('.cats a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        var id = (link.getAttribute('href') || '').replace('#', '');
+        var panel = document.getElementById(id);
+        if (panel && panel.tagName === 'DETAILS') panel.open = true;
+      });
+    });
     input.addEventListener('input', function () {
       var q = input.value.trim().toLowerCase();
       var any = false;
@@ -188,6 +199,7 @@ function searchText(dish: Dish) {
           return !dish.hidden;
         });
         section.hidden = q !== '' && !visible;
+        if (section.tagName === 'DETAILS') section.open = q !== '' && visible;
       });
       if (empty) empty.hidden = q === '' || any;
     });
