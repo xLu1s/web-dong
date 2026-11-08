@@ -1,0 +1,135 @@
+---
+interface Props {
+  name: string;
+}
+const { name } = Astro.props;
+---
+
+<svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+  <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    {name === 'nigiri' && (
+      <>
+        <path d="M14 38c2 8 34 8 36 0-6-4-30-4-36 0z"></path>
+        <path d="M18 36c1-8 8-14 14-14s13 6 14 14"></path>
+        <path d="M24 28c2-6 14-6 16 0" stroke="#e4272a"></path>
+      </>
+    )}
+    {name === 'maki' && (
+      <>
+        <circle cx="32" cy="32" r="16"></circle>
+        <circle cx="32" cy="32" r="7"></circle>
+        <path d="M32 16v4M32 44v4M16 32h4M44 32h4" stroke="#e4272a"></path>
+      </>
+    )}
+    {name === 'temaki' && (
+      <>
+        <path d="M14 18c10 2 22 12 28 28-12-2-22-10-28-28z"></path>
+        <path d="M22 24c6 4 12 12 14 18" stroke="#e4272a"></path>
+        <path d="M30 20c2 2 3 5 2 8"></path>
+      </>
+    )}
+    {name === 'uramaki' && (
+      <>
+        <rect x="14" y="22" width="36" height="20" rx="10"></rect>
+        <path d="M22 32h6M36 32h6" stroke="#e4272a"></path>
+        <path d="M32 22v20"></path>
+      </>
+    )}
+    {name === 'combinados' && (
+      <>
+        <rect x="12" y="18" width="40" height="28" rx="3"></rect>
+        <circle cx="24" cy="32" r="4"></circle>
+        <circle cx="40" cy="32" r="4" stroke="#e4272a"></circle>
+        <path d="M18 42h28"></path>
+      </>
+    )}
+    {name === 'dim-sum' && (
+      <>
+        <path d="M16 36c0-10 8-16 16-16s16 6 16 16c-6 6-26 6-32 0z"></path>
+        <path d="M24 30c2 3 4 3 8 0s6-1 8 2" stroke="#e4272a"></path>
+        <path d="M32 20v-4"></path>
+      </>
+    )}
+    {name === 'ensaladas' && (
+      <>
+        <path d="M18 40c2-12 8-18 14-18s12 6 14 18"></path>
+        <path d="M20 40h24"></path>
+        <path d="M28 28c2-6 8-8 10-4" stroke="#e4272a"></path>
+      </>
+    )}
+    {name === 'marinados' && (
+      <>
+        <path d="M16 34c6-10 26-12 34-2-8 8-26 10-34 2z"></path>
+        <path d="M24 32c4-2 10-2 14 1" stroke="#e4272a"></path>
+        <path d="M40 24l4-6"></path>
+      </>
+    )}
+    {name === 'rollos' && (
+      <>
+        <path d="M18 26h22c6 0 10 4 10 8s-6 8-12 8H20"></path>
+        <path d="M22 26c2 6 2 12 0 16" stroke="#e4272a"></path>
+        <path d="M16 30h6M16 38h8"></path>
+      </>
+    )}
+    {name === 'sopas' && (
+      <>
+        <path d="M16 28h32v6c0 10-7 16-16 16s-16-6-16-16v-6z"></path>
+        <path d="M22 22c2 3 2 3 0 6M32 20c2 3 2 3 0 6M42 22c2 3 2 3 0 6" stroke="#e4272a"></path>
+      </>
+    )}
+    {name === 'carne' && (
+      <>
+        <path d="M18 40c4-14 24-18 32-8 2 8-6 16-16 16-8 0-14-4-16-8z"></path>
+        <path d="M24 24c4 2 6 6 4 10" stroke="#e4272a"></path>
+        <path d="M20 44h24"></path>
+      </>
+    )}
+    {name === 'arroz' && (
+      <>
+        <path d="M16 30h32l-3 16H19z"></path>
+        <path d="M22 30c0-6 20-6 20 0"></path>
+        <path d="M28 38h.5M34 42h.5M32 36h.5" stroke="#e4272a"></path>
+      </>
+    )}
+    {name === 'pescados' && (
+      <>
+        <path d="M14 32c8-8 20-10 30-6l8-6v20l-8-6c-10 4-22 2-30-2z"></path>
+        <circle cx="24" cy="32" r="1.4" fill="#e4272a" stroke="none"></circle>
+      </>
+    )}
+    {name === 'verdura' && (
+      <>
+        <path d="M32 46V28"></path>
+        <path d="M32 32c-8-2-14-8-14-14 8 0 14 6 14 14z"></path>
+        <path d="M32 34c8-2 16-6 16-14-8 2-14 8-16 14z" stroke="#e4272a"></path>
+      </>
+    )}
+    {name === 'menus' && (
+      <>
+        <circle cx="24" cy="32" r="10"></circle>
+        <circle cx="40" cy="32" r="10" stroke="#e4272a"></circle>
+        <path d="M24 32h.5M40 32h.5"></path>
+      </>
+    )}
+    {name === 'domicilio' && (
+      <>
+        <path d="M14 38h28l4-10H22z"></path>
+        <circle cx="22" cy="44" r="3"></circle>
+        <circle cx="38" cy="44" r="3" stroke="#e4272a"></circle>
+        <path d="M18 28h8"></path>
+      </>
+    )}
+    {name === 'local' && (
+      <>
+        <path d="M12 28 32 14l20 14v22H12z"></path>
+        <path d="M28 50V36h8v14" stroke="#e4272a"></path>
+      </>
+    )}
+    {name === 'visita' && (
+      <>
+        <path d="M32 14c8 0 14 6 14 14 0 10-14 22-14 22S18 38 18 28c0-8 6-14 14-14z"></path>
+        <circle cx="32" cy="28" r="4" stroke="#e4272a"></circle>
+      </>
+    )}
+  </g>
+</svg>

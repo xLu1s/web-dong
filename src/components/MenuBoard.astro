@@ -1,5 +1,6 @@
 ---
 import AllergenIcon from './AllergenIcon.astro';
+import Mark from './Mark.astro';
 import {
   allergens,
   allergenLabels,
@@ -41,23 +42,16 @@ function searchText(dish: Dish) {
     <h2 id="frase" class="sr-only">Platos a medida</h2>
     <p>
       {phrase.map(([word, hot], index) => (
-        <span class={hot ? 'hot' : undefined} style={`--i:${index}`}>{word} </span>
+        <span class={hot ? 'word hot' : 'word'} style={`--i:${index}`}>{word} </span>
       ))}
     </p>
   </div>
 </section>
 
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track">
-    <span>Sushi <b>·</b> Dim sum <b>·</b> Wok <b>·</b> Arroz <b>·</b> Nigiri <b>·</b> Maki <b>·</b></span>
-    <span>Sushi <b>·</b> Dim sum <b>·</b> Wok <b>·</b> Arroz <b>·</b> Nigiri <b>·</b> Maki <b>·</b></span>
-  </div>
-</div>
-
-<section class="menu-head" id="carta">
+<section class="menu-head arrive" id="carta">
   <div class="wrap">
     <p class="kicker">La carta</p>
-    <h2>Platos a la carta</h2>
+    <h2><Mark name="maki" /> Platos a la carta</h2>
     <p class="quote">Si desea algún plato que no esté en la carta lo podemos hacer, consúltenos.</p>
   </div>
 </section>
@@ -93,11 +87,11 @@ function searchText(dish: Dish) {
 
   {sections.map((section) => (
     <details class="section fold" id={section.id} data-section>
-      <summary>
-        <span class="kicker">{section.kicker}</span>
-        <span class="section-title h-serif">
-          {section.title}
-          <span class="brush" aria-hidden="true"></span>
+      <summary class="arrive">
+        <span class="fold-mark"><Mark name={section.id} /></span>
+        <span class="fold-copy">
+          <span class="kicker">{section.kicker}</span>
+          <span class="section-title h-serif">{section.title}</span>
         </span>
       </summary>
       {section.note && <p class="section-note">{section.note}</p>}
@@ -138,16 +132,16 @@ function searchText(dish: Dish) {
   ))}
 
   <details class="section fold" id="menus" data-section>
-    <summary>
-      <span class="kicker">Para compartir</span>
-      <span class="section-title h-serif">
-        Menús para 2
-        <span class="brush" aria-hidden="true"></span>
+    <summary class="arrive">
+      <span class="fold-mark"><Mark name="menus" /></span>
+      <span class="fold-copy">
+        <span class="kicker">Para compartir</span>
+        <span class="section-title h-serif">Menús para 2</span>
       </span>
     </summary>
     <div class="sets">
       {setMenus.map((menu) => (
-        <article class={`set`} id={menu.id} data-dish={`menu ${menu.letter} ${menu.title} ${menu.items.join(' ')}`.toLowerCase()}>
+        <article class="set arrive" id={menu.id} data-dish={`menu ${menu.letter} ${menu.title} ${menu.items.join(' ')}`.toLowerCase()}>
           <span class="set-letter">{menu.letter}</span>
           <h4>{menu.title}</h4>
           <ul>
@@ -179,7 +173,7 @@ function searchText(dish: Dish) {
     if (!input) return;
     var dishes = Array.prototype.slice.call(document.querySelectorAll('[data-dish]'));
     var sections = Array.prototype.slice.call(document.querySelectorAll('[data-section]'));
-    document.querySelectorAll('.cats a').forEach(function (link) {
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
       link.addEventListener('click', function () {
         var id = (link.getAttribute('href') || '').replace('#', '');
         var panel = document.getElementById(id);

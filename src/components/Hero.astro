@@ -1,11 +1,10 @@
 ---
 import { Picture } from 'astro:assets';
 import hero from '../assets/photos/hero-sushi.jpg';
-import Branch from './Branch.astro';
 import { phone, phoneDisplay } from '../data/menu';
 ---
 
-<header class="hero">
+<header class="hero" id="inicio">
   <div class="hero-media">
     <Picture
       src={hero}
@@ -19,23 +18,29 @@ import { phone, phoneDisplay } from '../data/menu';
     />
   </div>
   <div class="hero-shade" aria-hidden="true"></div>
-  <Branch />
+  <div class="hanko" aria-hidden="true">
+    <svg viewBox="0 0 80 80">
+      <rect x="4" y="4" width="72" height="72" fill="none" stroke="currentColor" stroke-width="3"></rect>
+      <rect x="10" y="10" width="60" height="60" fill="none" stroke="currentColor" stroke-width="1.2"></rect>
+      <text x="40" y="56" text-anchor="middle" font-size="40">東</text>
+    </svg>
+  </div>
   <div class="hero-inner">
     <div class="kanji-lock">
       <p class="kanji" aria-hidden="true">東</p>
       <svg class="kanji-stroke" viewBox="0 0 120 120" aria-hidden="true">
-      <path class="draw" pathLength="1" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="square" d="M14 16 H106 M24 32 H96 M60 16 V108 M36 44 H84 V74 H36 Z M36 59 H84 M60 74 L22 108 M60 74 L98 108"></path>
-    </svg>
+        <path class="draw" pathLength="1" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="square" d="M14 16 H106 M24 32 H96 M60 16 V108 M36 44 H84 V74 H36 Z M36 59 H84 M60 74 L22 108 M60 74 L98 108"></path>
+      </svg>
     </div>
-    <p class="eyebrow">Alcoy · Alcoi</p>
+    <p class="eyebrow load-2">Alcoy · Alcoi</p>
     <h1 class="wordmark">
-      <span class="wordmark-name">Dōng</span>
-      <span class="wordmark-sub">Asian &amp; Sushi Bar</span>
+      <span class="wordmark-name load-3">Dōng</span>
+      <span class="wordmark-sub load-4">Asian &amp; Sushi Bar</span>
     </h1>
-    <p class="hero-lead">Sushi, dim sum y wok. Si no está en la carta, lo hacemos.</p>
+    <p class="hero-lead load-5">Sushi, dim sum y wok. Si no está en la carta, lo hacemos.</p>
     <div class="cta-row">
-      <a class="btn btn-cream" href="#carta">Ver carta</a>
-      <a class="btn btn-ghost" href={`tel:${phone}`}>Llamar / Pedir a domicilio · {phoneDisplay}</a>
+      <a class="btn btn-cream load-6" href="#carta">Ver carta</a>
+      <a class="btn btn-ghost load-7" href={`tel:${phone}`}>Llamar / Pedir a domicilio · {phoneDisplay}</a>
     </div>
   </div>
 </header>

@@ -9,17 +9,9 @@
     return Math.min(b, Math.max(a, n));
   }
 
-  function mix(from, to, t) {
-    var a = from.match(/\w\w/g).map(function (h) { return parseInt(h, 16); });
-    var b = to.match(/\w\w/g).map(function (h) { return parseInt(h, 16); });
-    var c = a.map(function (v, i) { return Math.round(v + (b[i] - v) * t); });
-    return 'rgb(' + c.join(',') + ')';
-  }
-
   function seen(el) {
     var r = el.getBoundingClientRect();
-    var passed = window.innerHeight - r.top;
-    return clamp(passed / (window.innerHeight * 0.72), 0, 1);
+    return clamp((window.innerHeight - r.top) / (window.innerHeight * 0.7), 0, 1);
   }
 
   function frame() {
@@ -29,42 +21,27 @@
     var bar = document.querySelector('.progress');
     if (bar) bar.style.transform = 'scaleX(' + page + ')';
 
-    var hero = document.querySelector('.hero');
-    if (hero) {
-      var hr = hero.getBoundingClientRect();
-      var exit = clamp(-hr.top / Math.max(hr.height, 1), 0, 1);
-      var media = document.querySelector('.hero-media');
-      if (media) {
-        media.style.transform = 'scale(' + (1 + exit * 0.12) + ') translateY(' + (exit * -4) + '%)';
-        media.style.filter = 'blur(' + (exit * 8) + 'px)';
-      }
-      document.querySelectorAll('.kanji-stroke .draw, .hero .branch .draw, .hero .branch .twig').forEach(function (path) {
-        path.style.strokeDashoffset = String(1 - exit);
-      });
-    }
-
-    document.querySelectorAll('.branch-fixed .draw, .branch-fixed .twig').forEach(function (path) {
-      path.style.strokeDashoffset = String(1 - page);
+    document.querySelectorAll('.arrive').forEach(function (el) {
+      var p = seen(el);
+      var y = (1 - p) * 68;
+      var s = 0.92 + p * 0.08;
+      el.style.transform = 'translateY(' + y + 'px) scale(' + s + ')';
     });
 
-    document.querySelectorAll('.phrase span').forEach(function (span, i) {
-      var local = clamp((seen(span.parentElement) - i * 0.025) / 0.55, 0, 1);
-      span.style.color = span.classList.contains('hot') ? mix('#c4beb4', '#e4272a', local) : mix('#c4beb4', '#f1e9de', local);
+    document.querySelectorAll('.mark').forEach(function (el) {
+      var p = seen(el);
+      el.style.transform = 'scale(' + (0.45 + p * 0.55) + ') rotate(' + ((1 - p) * -18) + 'deg)';
     });
 
-    var track = document.querySelector('.marquee-track');
-    var band = document.querySelector('.marquee');
-    if (track && band) track.style.transform = 'translateX(' + (8 - seen(band) * 42) + 'vw)';
-
-    document.querySelectorAll('.section-title .brush').forEach(function (brush) {
-      brush.style.transform = 'scaleX(' + seen(brush) + ')';
-      brush.style.transformOrigin = '0 50%';
+    document.querySelectorAll('.phrase .word').forEach(function (el, i) {
+      var p = clamp((seen(el.parentElement) - i * 0.03) / 0.7, 0, 1);
+      el.style.transform = 'translateY(' + ((1 - p) * 52) + 'px)';
     });
 
     document.querySelectorAll('.frame img').forEach(function (img) {
       var p = seen(img);
       img.style.clipPath = 'inset(0 0 ' + ((1 - p) * 100) + '% 0)';
-      img.style.transform = 'scale(' + (1.06 - p * 0.06) + ')';
+      img.style.transform = 'scale(' + (0.92 + p * 0.08) + ')';
     });
 
     document.querySelectorAll('.count-a, .count-b').forEach(function (el) {

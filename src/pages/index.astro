@@ -4,11 +4,8 @@ import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import MenuBoard from '../components/MenuBoard.astro';
 import LocalGallery from '../components/LocalGallery.astro';
+import Mark from '../components/Mark.astro';
 import atun from '../assets/photos/casa-1.jpg';
-import salmon from '../assets/photos/casa-2.jpg';
-import mantequilla from '../assets/photos/casa-3.jpg';
-import langostino from '../assets/photos/casa-4.jpg';
-import anguila from '../assets/photos/casa-5.jpg';
 import dimsum from '../assets/photos/dimsum.jpg';
 import sashimi from '../assets/photos/sashimi.jpg';
 import noodles from '../assets/photos/noodles.jpg';
@@ -75,90 +72,51 @@ const jsonLd = {
   priceRange: '€€',
 };
 
-const plates = [
-  { src: atun, alt: 'Nigiri de atún' },
-  { src: salmon, alt: 'Nigiri de salmón' },
-  { src: mantequilla, alt: 'Nigiri de pez mantequilla' },
-  { src: langostino, alt: 'Nigiri de langostino' },
-  { src: anguila, alt: 'Nigiri de anguila' },
-];
 ---
 
 <Layout title={title} description={description} jsonLd={jsonLd}>
   <Hero />
   <main id="contenido">
 
-  <section class="intro" aria-labelledby="casa">
-    <div class="wrap intro-grid">
-      <div>
-        <p class="kicker">Asian &amp; Sushi Bar</p>
-        <h2 id="casa">Cocina asiática en Alcoy</h2>
-      </div>
-      <div>
-        <p class="lede">
-          Nigiri, maki, dim sum, wok, arroces y tallarines. La carta impresa lo dice claro:
-          si desea algún plato que no esté, lo pueden hacer.
-        </p>
-        <ul class="facts">
-          <li>
-            <strong>A domicilio</strong>
-            Gratis, con pedido mínimo de 9 €. De 12:00 a 16:30 y de 19:30 a 00:00.
-          </li>
-          <li>
-            <strong>Teléfono</strong>
-            <a href={`tel:${phone}`}>{phoneDisplay}</a>
-          </li>
-          <li>
-            <strong>Pedido online</strong>
-            <a href={orderUrl} rel="noopener noreferrer">www.dongasiansushi.com</a>
-          </li>
-          <li>
-            <strong>Horario de sala</strong>
-            [por confirmar]. En dongasiansushi.com publican 12:00–16:00 y 19:30–24:00.
-          </li>
-          <li>
-            <strong>El local</strong>
-            <a href="#local">Centro Comercial Alzamora, 2.ª planta</a>
-          </li>
-        </ul>
-      </div>
-    </div>
+  <section class="picks" aria-labelledby="picks-title">
     <div class="wrap">
-      <div class="mosaic">
-        {plates.map((plate) => (
+      <p class="kicker">De la carta</p>
+      <h2 id="picks-title" class="arrive">Nigiri, dim sum y menús</h2>
+      <div class="pick-grid">
+        <a class="pick arrive" href="#nigiri">
           <figure class="frame">
-            <Picture
-              src={plate.src}
-              formats={['avif', 'webp']}
-              widths={[200, 400]}
-              sizes="(max-width: 760px) 46vw, 18vw"
-              alt={plate.alt}
-              loading="lazy"
-            />
+            <Picture src={atun} formats={['avif', 'webp']} widths={[320, 640]} sizes="(max-width: 760px) 100vw, 24vw" alt="Nigiri de atún" loading="lazy" />
           </figure>
-        ))}
+          <span class="pick-body"><Mark name="nigiri" /><span><strong>Nigiri</strong><small>2 unidades</small></span></span>
+        </a>
+        <a class="pick arrive" href="#dim-sum">
+          <figure class="frame">
+            <Picture src={dimsum} formats={['avif', 'webp']} widths={[320, 640]} sizes="(max-width: 760px) 100vw, 24vw" alt="Empanadillas al vapor" loading="lazy" />
+          </figure>
+          <span class="pick-body"><Mark name="dim-sum" /><span><strong>Dim sum</strong><small>Gyouzas, shumai, bao</small></span></span>
+        </a>
+        <a class="pick arrive" href="#arroz">
+          <figure class="frame">
+            <Picture src={noodles} formats={['avif', 'webp']} widths={[320, 640]} sizes="(max-width: 760px) 100vw, 24vw" alt="Bol de tallarines" loading="lazy" />
+          </figure>
+          <span class="pick-body"><Mark name="arroz" /><span><strong>Arroz y pasta</strong><small>Arroces y tallarines</small></span></span>
+        </a>
+        <a class="pick pick-plain arrive" href="#menus">
+          <span class="pick-prices"><span>15,95 €</span><span>29,95 €</span></span>
+          <span class="pick-body"><Mark name="menus" /><span><strong>Menús para 2</strong><small>Menú A y menú B</small></span></span>
+        </a>
       </div>
     </div>
   </section>
 
   <div class="wrap editorial">
-    <figure class="frame">
+    <figure class="frame arrive">
       <Picture
         src={sashimi}
         formats={['avif', 'webp']}
         widths={[640, 960, 1400]}
-        sizes="(max-width: 760px) 100vw, 58vw"
+        sizes="(max-width: 760px) 100vw, 70vw"
         alt="Tabla de uramaki y maki de salmón"
-        loading="lazy"
-      />
-    </figure>
-    <figure class="frame">
-      <Picture
-        src={dimsum}
-        formats={['avif', 'webp']}
-        widths={[480, 800, 1200]}
-        sizes="(max-width: 760px) 100vw, 38vw"
-        alt="Empanadillas al vapor con sésamo"
         loading="lazy"
       />
     </figure>
@@ -182,42 +140,45 @@ const plates = [
   <LocalGallery />
 
   <section class="visit" id="contacto" aria-labelledby="visita">
-    <div class="wrap visit-grid">
-      <div>
-        <p class="kicker">Alcoy</p>
-        <h2 id="visita">Pase o pida a casa</h2>
-        <p class="muted">Asian &amp; Sushi Bar · Centro Comercial Alzamora</p>
-      </div>
-      <div>
-        <p>
-          C/ Els Alçamora, 44, 2.ª planta<br />
-          03802 Alcoy, Alicante
-        </p>
-        <p>
-          <a href={`tel:${phone}`}>{phoneDisplay}</a><br />
-          <a href={orderUrl} rel="noopener noreferrer">www.dongasiansushi.com</a>
-        </p>
-        <p class="muted">
-          Servicio a domicilio gratis. Pedido mínimo 9 €. De 12:00 a 16:30 y de 19:30 a 00:00.
-        </p>
-        <div class="cta-row">
-          <a class="btn btn-cream" href="#carta">Ver carta</a>
-          <a class="btn btn-ghost" href={`tel:${phone}`}>Llamar / Pedir a domicilio</a>
+    <div class="wrap">
+      <p class="kicker">Visita</p>
+      <h2 id="visita" class="with-mark arrive"><Mark name="visita" /> Pase o pida a casa</h2>
+      <dl class="contact-grid">
+        <div class="arrive">
+          <dt>Dirección</dt>
+          <dd>Centro Comercial Alzamora<br />C/ Els Alçamora, 44, 2.ª planta<br />03802 Alcoy, Alicante</dd>
         </div>
-        <p>
-          <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Centro Comercial Alzamora, Calle Els Alçamora 44, Alcoy')}`}>
-            Cómo llegar
-          </a>
-        </p>
+        <div class="arrive">
+          <dt>Teléfono</dt>
+          <dd><a href={`tel:${phone}`}>{phoneDisplay}</a></dd>
+        </div>
+        <div class="arrive">
+          <dt>A domicilio</dt>
+          <dd>Gratis, con pedido mínimo de 9 €. De 12:00 a 16:30 y de 19:30 a 00:00.</dd>
+        </div>
+        <div class="arrive">
+          <dt>Horario de sala</dt>
+          <dd>[por confirmar]. En dongasiansushi.com publican 12:00–16:00 y 19:30–24:00.</dd>
+        </div>
+        <div class="arrive">
+          <dt>Pedido online</dt>
+          <dd><a href={orderUrl} rel="noopener noreferrer">www.dongasiansushi.com</a></dd>
+        </div>
+      </dl>
+      <div class="cta-row">
+        <a class="btn btn-cream" href="#carta">Ver carta</a>
+        <a class="btn btn-ghost" href={`tel:${phone}`}>Llamar / Pedir a domicilio</a>
       </div>
+      <p>
+        <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Centro Comercial Alzamora, Calle Els Alçamora 44, Alcoy')}`}>Cómo llegar</a>
+      </p>
     </div>
   </section>
   </main>
 
   <footer class="site-footer">
     <div class="wrap">
-      <p>Dōng Asian &amp; Sushi Bar · Alcoy</p>
-      <p>IVA incluido en todos los precios. Horario de sala [por confirmar].</p>
+      <p>Dōng Asian &amp; Sushi Bar</p>
     </div>
   </footer>
 </Layout>
