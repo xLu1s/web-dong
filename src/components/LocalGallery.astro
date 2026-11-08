@@ -1,0 +1,59 @@
+---
+import { Picture } from 'astro:assets';
+import { localSlots } from '../data/local';
+import { phoneDisplay } from '../data/menu';
+---
+
+<section class="local" id="local" aria-labelledby="local-title">
+  <div class="wrap">
+    <p class="kicker">Alzamora</p>
+    <h2 id="local-title">El local</h2>
+    <p class="lede">
+      Dōng Asian &amp; Sushi Bar está en el Centro Comercial Alzamora, C/ Els Alçamora, 44,
+      2.ª planta, Alcoy. Teléfono {phoneDisplay}. El servicio a domicilio es gratis, con pedido
+      mínimo de 9 €, de 12:00 a 16:30 y de 19:30 a 00:00.
+    </p>
+    <div class="local-grid">
+      {localSlots.map((slot) => (
+        <figure class="frame local-slot">
+          {slot.src ? (
+            <Picture
+              src={slot.src}
+              formats={['avif', 'webp']}
+              widths={[480, 800, 1200]}
+              sizes="(max-width: 760px) 100vw, 34vw"
+              alt={slot.alt}
+              loading="lazy"
+            />
+          ) : (
+            <div class="local-placeholder" aria-hidden="true">
+              <span class="local-kanji">東</span>
+              <svg class="local-branch" viewBox="0 0 160 220" preserveAspectRatio="xMaxYMin meet">
+                <path
+                  d="M120 210 C118 160 150 140 108 100 C72 66 128 48 96 12"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                ></path>
+                <path
+                  d="M108 100 C138 92 150 70 158 52"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.4"
+                  stroke-linecap="round"
+                ></path>
+                <ellipse cx="158" cy="48" rx="5" ry="3" transform="rotate(-24 158 48)"></ellipse>
+                <ellipse cx="94" cy="10" rx="4.5" ry="2.6" transform="rotate(16 94 10)"></ellipse>
+              </svg>
+            </div>
+          )}
+          <figcaption>
+            <span class="local-name">{slot.slot}</span>
+            <span class="local-label">{slot.label}</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
