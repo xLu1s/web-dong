@@ -4,7 +4,6 @@ import '@fontsource/outfit/latin-500.css';
 import '@fontsource/outfit/latin-700.css';
 import minchoLatin from '@fontsource/shippori-mincho/files/shippori-mincho-latin-500-normal.woff2?url';
 import '../styles/global.css';
-import Branch from '../components/Branch.astro';
 
 interface Props {
   title: string;
@@ -51,7 +50,6 @@ const json = jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') : '';
   <body>
     <a class="skip" href="#carta">Saltar a la carta</a>
     <div class="progress" aria-hidden="true"></div>
-    <Branch class="branch-fixed" />
     <slot />
     <script is:inline define:vars={{ fallbackSrc: `${basePath}scroll-fallback.js` }}>
       (function () {
