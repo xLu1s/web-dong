@@ -3,6 +3,7 @@ import { Picture } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import MenuBoard from '../components/MenuBoard.astro';
+import LocalGallery from '../components/LocalGallery.astro';
 import atun from '../assets/photos/casa-1.jpg';
 import salmon from '../assets/photos/casa-2.jpg';
 import mantequilla from '../assets/photos/casa-3.jpg';
@@ -115,6 +116,10 @@ const plates = [
             <strong>Horario de sala</strong>
             [por confirmar]. En dongasiansushi.com publican 12:00–16:00 y 19:30–24:00.
           </li>
+          <li>
+            <strong>El local</strong>
+            <a href="#local">Centro Comercial Alzamora, 2.ª planta</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -173,6 +178,8 @@ const plates = [
       />
     </figure>
   </div>
+
+  <LocalGallery />
 
   <section class="visit" id="contacto" aria-labelledby="visita">
     <div class="wrap visit-grid">

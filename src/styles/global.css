@@ -770,6 +770,91 @@ h2,
   content: counter(euros) "," counter(cents, decimal-leading-zero) " €";
 }
 
+.local {
+  padding: 3.5rem 0 3.2rem;
+  scroll-margin-top: 5.5rem;
+}
+
+.local h2 {
+  font-size: clamp(2.8rem, 7vw, 5rem);
+}
+
+.local .lede {
+  margin-top: 1rem;
+}
+
+.local-grid {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 1.6rem;
+}
+
+.local-slot.frame {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--ink);
+  color: var(--cream);
+}
+
+.local-placeholder {
+  position: absolute;
+  inset: 0;
+}
+
+.local-kanji {
+  position: absolute;
+  left: 0.6rem;
+  top: 0.1rem;
+  font-family: var(--kanji);
+  font-size: clamp(4.5rem, 14vw, 7.5rem);
+  line-height: 0.85;
+  color: rgba(241, 233, 222, 0.16);
+}
+
+.local-branch {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.2rem;
+  width: min(38%, 9rem);
+  height: auto;
+  color: var(--red);
+}
+
+.local-branch ellipse {
+  fill: var(--red);
+}
+
+.local-slot figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  padding: 2.4rem 1rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+  background: linear-gradient(180deg, transparent, rgba(7, 16, 24, 0.78));
+}
+
+.local-name {
+  font-family: var(--serif);
+  font-size: clamp(1.55rem, 3vw, 2.15rem);
+  line-height: 0.95;
+}
+
+.local-label {
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
 .visit {
   background: var(--ink);
   color: var(--cream);
@@ -831,6 +916,16 @@ h2,
 
   .sets {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .local-grid {
+    grid-template-columns: 1.35fr 1fr 1fr;
+  }
+
+  .local-slot:first-child {
+    grid-row: span 2;
+    aspect-ratio: auto;
+    min-height: 100%;
   }
 
   .menu-tools .bar {
