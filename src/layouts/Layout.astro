@@ -1,0 +1,57 @@
+---
+import '@fontsource/outfit/latin-400.css';
+import '@fontsource/outfit/latin-500.css';
+import '@fontsource/outfit/latin-700.css';
+import '@fontsource/cormorant-garamond/latin-500.css';
+import '@fontsource/cormorant-garamond/latin-600.css';
+import '../styles/global.css';
+import Branch from '../components/Branch.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  jsonLd?: Record<string, unknown>;
+}
+
+const { title, description, jsonLd } = Astro.props;
+const basePath = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const canonical = new URL(basePath, Astro.site);
+const ogImage = new URL('og.jpg', canonical);
+const json = jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') : '';
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical.href} />
+    <meta name="theme-color" content="#071018" />
+    <meta name="geo.region" content="ES-A" />
+    <meta name="geo.placename" content="Alcoy" />
+    <meta property="og:type" content="restaurant" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="Dōng Asian & Sushi Bar" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:image" content={ogImage.href} />
+    <meta property="og:image:alt" content="Variado de sushi" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage.href} />
+    <link rel="icon" href={`${basePath}favicon.svg`} type="image/svg+xml" />
+    {json && <script type="application/ld+json" set:html={json} />}
+  </head>
+  <body>
+    <a class="skip" href="#carta">Saltar a la carta</a>
+    <div class="progress" aria-hidden="true"></div>
+    <Branch class="branch-fixed" />
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,195 @@
+---
+import AllergenIcon from './AllergenIcon.astro';
+import {
+  allergens,
+  allergenLabels,
+  sections,
+  setMenus,
+  type Dish,
+} from '../data/menu';
+
+const phrase = [
+  ['Si', false],
+  ['desea', false],
+  ['algún', false],
+  ['plato', false],
+  ['que', false],
+  ['no', false],
+  ['esté', false],
+  ['en', false],
+  ['la', false],
+  ['carta', false],
+  ['lo', true],
+  ['podemos', true],
+  ['hacer,', true],
+  ['consúltenos.', true],
+] as const;
+
+function spicyLabel(level: 1 | 2 | 3) {
+  if (level === 1) return 'Picante';
+  if (level === 2) return 'Picante, dos chiles';
+  return 'Muy picante, tres chiles';
+}
+
+function searchText(dish: Dish) {
+  return `${dish.code} ${dish.name} ${dish.description ?? ''}`.toLowerCase();
+}
+---
+
+<section class="phrase" aria-labelledby="frase">
+  <div class="wrap">
+    <h2 id="frase" class="sr-only">Platos a medida</h2>
+    <p>
+      {phrase.map(([word, hot]) => (
+        <span class={hot ? 'hot' : undefined}>{word} </span>
+      ))}
+    </p>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Sushi <b>·</b> Dim sum <b>·</b> Wok <b>·</b> Arroz <b>·</b> Nigiri <b>·</b> Maki <b>·</b></span>
+    <span>Sushi <b>·</b> Dim sum <b>·</b> Wok <b>·</b> Arroz <b>·</b> Nigiri <b>·</b> Maki <b>·</b></span>
+  </div>
+</div>
+
+<section class="menu-head" id="carta">
+  <div class="wrap">
+    <p class="kicker">La carta</p>
+    <h2>Platos a la carta</h2>
+    <p class="quote">Si desea algún plato que no esté en la carta lo podemos hacer, consúltenos.</p>
+  </div>
+</section>
+
+<div class="menu-tools">
+  <div class="wrap bar">
+    <form class="search" role="search" onsubmit="return false">
+      <label class="sr-only" for="buscar">Buscar en la carta</label>
+      <input id="buscar" type="search" placeholder="Buscar plato o número" autocomplete="off" />
+    </form>
+    <nav class="cats" aria-label="Categorías de la carta">
+      {sections.map((section) => (
+        <a href={`#${section.id}`}>{section.title}</a>
+      ))}
+      <a href="#menus">Menús para 2</a>
+    </nav>
+  </div>
+</div>
+
+<div class="wrap">
+  <p class="notice">
+    Si usted tiene alguna alergia alimentaria, por favor póngase en contacto con nuestro personal.
+    Los iconos siguen la leyenda de la carta. IVA incluido en todos los precios.
+  </p>
+  <ul class="legend">
+    {allergens.map((item) => (
+      <li>
+        <AllergenIcon id={item.id} />
+        <span>{item.label}</span>
+      </li>
+    ))}
+  </ul>
+
+  {sections.map((section) => (
+    <section class="section" id={section.id} data-section>
+      <p class="kicker">{section.kicker}</p>
+      <h3 class="section-title h-serif">
+        {section.title}
+        <span class="brush" aria-hidden="true"></span>
+      </h3>
+      {section.note && <p class="section-note">{section.note}</p>}
+      <div class="dishes">
+        {section.dishes.map((dish) => (
+          <article class="dish" data-dish={searchText(dish)}>
+            <span class="dish-code">{dish.code}</span>
+            <h4 class="dish-name">{dish.name}</h4>
+            <p class="dish-price">
+              {dish.price} €
+              {dish.altPrice && <small>2 uds. {dish.altPrice} €</small>}
+            </p>
+            {dish.description && <p class="dish-desc">{dish.description}</p>}
+            <div class="dish-meta">
+              {dish.novel && <span class="badge novel">Novedad</span>}
+              {dish.spicy && (
+                <span class="badge">
+                  <span class="sr-only">{spicyLabel(dish.spicy)}</span>
+                  {Array.from({ length: dish.spicy }, () => (
+                    <svg class="icon" viewBox="0 0 16 16" aria-hidden="true">
+                      <path fill="#e4272a" d="M8.2 1.2c.2.9-.4 1.5-1 .8.7 1.5 2.6 2.2 3.6 4.4 1 2.6-.2 5-2.8 5.2-1.8.2-3-1-3.6-2.4-.6 1.6-2.2 2.4-3.4 1.4C.2 9.6.8 7 2.4 5.2 3.6 3.8 5.2 2.6 5.6 1.6c.5-.4 1.4-.8 2.6-.4z"></path>
+                    </svg>
+                  ))}
+                </span>
+              )}
+              {dish.allergensPending && <span class="pending">Alérgenos: [por confirmar]</span>}
+              {dish.allergens.length > 0 && (
+                <span class="icons">
+                  <span class="sr-only">Alérgenos: {allergenLabels(dish.allergens)}.</span>
+                  {dish.allergens.map((id) => <AllergenIcon id={id} />)}
+                </span>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  ))}
+
+  <section class="section" id="menus" data-section>
+    <p class="kicker">Para compartir</p>
+    <h3 class="section-title h-serif">
+      Menús para 2
+      <span class="brush" aria-hidden="true"></span>
+    </h3>
+    <div class="sets">
+      {setMenus.map((menu) => (
+        <article class={`set`} id={menu.id} data-dish={`menu ${menu.letter} ${menu.title} ${menu.items.join(' ')}`.toLowerCase()}>
+          <span class="set-letter">{menu.letter}</span>
+          <h4>{menu.title}</h4>
+          <ul>
+            {menu.items.map((item) => <li>{item}</li>)}
+          </ul>
+          {menu.drink && <p>Bebida: {menu.drink}</p>}
+          <p class={`duo-price count-${menu.letter === 'A' ? 'a' : 'b'}`}>
+            <span class="duo-price__real">{menu.price} €</span>
+            <span class="duo-price__tick" aria-hidden="true"></span>
+          </p>
+          <p class="dish-meta">
+            <span class="sr-only">Alérgenos: {allergenLabels(menu.allergens)}.</span>
+            <span class="icons" aria-hidden="true">
+              {menu.allergens.map((id) => <AllergenIcon id={id} />)}
+            </span>
+          </p>
+        </article>
+      ))}
+    </div>
+    <p class="notice">IVA incluido en todos los precios.</p>
+  </section>
+  <p id="sin-resultados" class="empty" hidden>Ningún plato coincide con la búsqueda.</p>
+</div>
+
+<script is:inline>
+  (function () {
+    var input = document.getElementById('buscar');
+    var empty = document.getElementById('sin-resultados');
+    if (!input) return;
+    var dishes = Array.prototype.slice.call(document.querySelectorAll('[data-dish]'));
+    var sections = Array.prototype.slice.call(document.querySelectorAll('[data-section]'));
+    input.addEventListener('input', function () {
+      var q = input.value.trim().toLowerCase();
+      var any = false;
+      dishes.forEach(function (dish) {
+        var hit = q === '' || (dish.getAttribute('data-dish') || '').indexOf(q) !== -1;
+        dish.hidden = !hit;
+        if (hit) any = true;
+      });
+      sections.forEach(function (section) {
+        var visible = Array.prototype.some.call(section.querySelectorAll('[data-dish]'), function (dish) {
+          return !dish.hidden;
+        });
+        section.hidden = q !== '' && !visible;
+      });
+      if (empty) empty.hidden = q === '' || any;
+    });
+  })();
+</script>
