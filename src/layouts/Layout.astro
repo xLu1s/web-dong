@@ -2,8 +2,7 @@
 import '@fontsource/outfit/latin-400.css';
 import '@fontsource/outfit/latin-500.css';
 import '@fontsource/outfit/latin-700.css';
-import '@fontsource/cormorant-garamond/latin-500.css';
-import '@fontsource/cormorant-garamond/latin-600.css';
+import minchoLatin from '@fontsource/shippori-mincho/files/shippori-mincho-latin-500-normal.woff2?url';
 import '../styles/global.css';
 import Branch from '../components/Branch.astro';
 
@@ -46,6 +45,7 @@ const json = jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') : '';
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage.href} />
     <link rel="icon" href={`${basePath}favicon.svg`} type="image/svg+xml" />
+    <link rel="preload" href={minchoLatin} as="font" type="font/woff2" crossorigin />
     {json && <script type="application/ld+json" set:html={json} />}
   </head>
   <body>
@@ -53,5 +53,17 @@ const json = jsonLd ? JSON.stringify(jsonLd).replace(/</g, '\\u003c') : '';
     <div class="progress" aria-hidden="true"></div>
     <Branch class="branch-fixed" />
     <slot />
+    <script is:inline define:vars={{ fallbackSrc: `${basePath}scroll-fallback.js` }}>
+      (function () {
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var supported = false;
+        try { supported = CSS.supports('animation-timeline', 'view()'); } catch (e) { supported = false; }
+        if (reduce || supported) return;
+        var s = document.createElement('script');
+        s.src = fallbackSrc;
+        s.defer = true;
+        document.body.appendChild(s);
+      })();
+    </script>
   </body>
 </html>
